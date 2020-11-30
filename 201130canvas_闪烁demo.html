@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+    <style>
+        body{margin: 0;overflow: hidden}
+        #canvas{background: antiquewhite;}
+    </style>
+</head>
+<body>
+    <canvas id="canvasOne" width="640" height="500">
+        You browser does not support HTML5 Canvas
+    </canvas>
+<script>
+    window.addEventListener("load", eventWindowLoaded, false);
+function eventWindowLoaded(){
+    canvasApp();
+}
+
+function canvasApp(){
+    
+    var canvas = document.getElementById('canvasOne');
+    var context = canvas.getContext('2d');
+
+    function drawScreen(){ 
+        //背景
+        context.globalAlpha = 1;
+        context.fillStyle = "#ffffaa";
+        context.fillRect(0, 0, 640, 480);
+        //图像
+        context.globalAlpha = alpha;
+        if(fadeIn){
+            alpha += .01;
+            if(alpha >= 1){
+                alpha = 1;
+                fadeIn = false;
+            }
+        }else{
+            alpha -= .01;
+            if(alpha < 0){
+                alpha = 0;
+                fadeIn = true;
+            }
+        } 
+        //text
+        context.font = "72px Sans-Serif";
+        context.textBaseline = "top";
+        context.globalAlpha = alpha;
+        context.fillStyle = "#000000";
+        context.fillText(showtext, 150, 200);
+    }
+
+    var showtext = "hello world";
+    var alpha = 0;
+    var fadeIn = true;
+
+    function gameLoop(){
+        window.setTimeout(gameLoop, 20);
+        drawScreen();
+    }
+
+    gameLoop();
+
+}
+
+
+</script>
+</body>
+</html>
